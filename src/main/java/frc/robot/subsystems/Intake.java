@@ -14,7 +14,7 @@ public class Intake extends SubsystemBase{
     public CANSparkMax grabberMain = new CANSparkMax(IDs.Intake.spinnerMainMotor, MotorType.kBrushless);
     public CANSparkMax grabberSidekick = new CANSparkMax(IDs.Intake.spinnerMainMotor, MotorType.kBrushless);
 
-    public CANSparkMax dropperMotor = new CANSparkMax(IDs.Intake.intakedropperMotor, MotorType.kBrushless);
+    public CANSparkMax flippyDippyMotor = new CANSparkMax(IDs.Intake.flippyDippyMotor, MotorType.kBrushless);
 
     private DoubleSolenoid clamper = 
       new DoubleSolenoid(IDs.PneumaticsHub, PneumaticsModuleType.REVPH, IDs.Intake.clamperOpenChannel, IDs.Intake.clamperCloseChannel);

@@ -26,7 +26,8 @@ public class constants {
             //motors
             public static final int spinnerMainMotor = 6;
             public static final int spinnerSidekickMotor = 7;           
-            public static final int intakedropperMotor = 8;
+            public static final int flippyDippyMotor = 8;
+
             //ph
             public static final int clamperOpenChannel = 6;
             public static final int clamperCloseChannel = 7; 
