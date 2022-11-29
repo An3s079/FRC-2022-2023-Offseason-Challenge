@@ -11,6 +11,10 @@ private final Intake intake;
     addRequirements(intake);
   }
 
+  @Override
+  public void initialize() {
+    intake.setClamped(false);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
