@@ -2,6 +2,7 @@ package frc.robot;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.DriveShifter;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.ElevatorShifter;
 import frc.robot.constants.IDs;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.XboxController;
@@ -18,6 +19,7 @@ public class RobotContainer {
     public final Intake intake = new Intake();
     public final Elevator elevator = new Elevator();
     public final DriveShifter dShifter = new DriveShifter();
+    public final ElevatorShifter eShifter = new ElevatorShifter();
 
     private XboxController driverController = new XboxController(IDs.DriverController);
     private XboxController everythingElserController = new XboxController(IDs.EverythingElserController);
@@ -55,5 +57,11 @@ public class RobotContainer {
 
         new JoystickButton(driverController, 10) //right joystick button
         .whenPressed(new InstantCommand(dShifter::setTorque, dShifter));
+
+        new JoystickButton(everythingElserController, 9) //left joystick button
+        .whenPressed(new InstantCommand(eShifter::setSpeed, eShifter));
+
+        new JoystickButton(everythingElserController, 10) //right joystick button
+        .whenPressed(new InstantCommand(eShifter::setTorque, eShifter));
       }
 }
