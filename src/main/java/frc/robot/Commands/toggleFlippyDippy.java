@@ -6,10 +6,12 @@ import frc.robot.constants;
 public class toggleFlippyDippy extends CommandBase{
     /** Creates a new DriveDistance. */
   private final Intake intake;
+  private boolean IwantItOut = false;
   private double initPos;
-  public toggleFlippyDippy(Intake subsystem) {
+  public toggleFlippyDippy(Intake subsystem, boolean _out) {
     // Use addRequirements() here to declare subsystem dependencies.
     intake = subsystem;
+    IwantItOut = _out;
     addRequirements(subsystem);
   }
 // Called when the command is initially scheduled.
@@ -20,8 +22,8 @@ public void initialize() {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(intake.intakeOut) {
-        intake.flippyDippyMotor.set(-.4); 
+    if(!IwantItOut) {
+        intake.flippyDippyMotor.set(-.4); //pulls it in
     }
     else{
         intake.flippyDippyMotor.set(.4);
@@ -32,13 +34,15 @@ public void initialize() {
   @Override
   public void end(boolean interrupted) {
     intake.flippyDippyMotor.set(0);
-    intake.intakeOut = !intake.intakeOut;
+    intake.intakeOut = IwantItOut;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(intake.flippyDippyMotor.getEncoder().getPosition()-initPos) / intake.flippyDippyMotor.getEncoder().getCountsPerRevolution()) >= constants.dropperRotationsToTravel;
+    
+    return 
+    ((Math.abs(intake.flippyDippyMotor.getEncoder().getPosition()-initPos) / intake.flippyDippyMotor.getEncoder().getCountsPerRevolution()) >= constants.dropperRotationsToTravel) || IwantItOut == intake.intakeOut;
   }
     
 }

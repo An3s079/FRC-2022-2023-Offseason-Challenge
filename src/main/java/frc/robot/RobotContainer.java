@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Commands.EndIntake;
 import frc.robot.Commands.StartIntake;
 import frc.robot.Commands.toggleFlippyDippy;
-import frc.robot.Commands.toggleFlippyDippy;
 
 public class RobotContainer {
 
@@ -45,12 +44,12 @@ public class RobotContainer {
       private void buildBindings() {
 
         var aButton = new JoystickButton(everythingElserController, 1);
-        aButton.whenPressed(new toggleFlippyDippy(intake));
+        aButton.whenPressed(new toggleFlippyDippy(intake, true));
         aButton.whileActiveContinuous(new StartIntake(intake)); 
 
         var bButton = new JoystickButton(everythingElserController, 2);
         bButton.whileActiveContinuous(new EndIntake(intake));
-        bButton.whenReleased(new toggleFlippyDippy(intake));
+        bButton.whenReleased(new toggleFlippyDippy(intake, false));
 
 
         new JoystickButton(driverController, 9) //left joystick button
