@@ -8,7 +8,9 @@ import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Commands.EndIntake;
 import frc.robot.Commands.StartIntake;
 import frc.robot.Commands.toggleFlippyDippy;
@@ -43,14 +45,19 @@ public class RobotContainer {
        */ 
       private void buildBindings() {
 
-        var aButton = new JoystickButton(everythingElserController, 1);
-        aButton.whenPressed(new toggleFlippyDippy(intake, true));
-        aButton.whileActiveContinuous(new StartIntake(intake)); 
+        var aButton = new JoystickButton(everythingElserController, 1);  
+        aButton.whileActiveOnce(
+          new SequentialCommandGroup(
+            new toggleFlippyDippy(intake, true), 
+            new StartIntake(intake)
+          )); 
 
         var bButton = new JoystickButton(everythingElserController, 2);
-        bButton.whileActiveContinuous(new EndIntake(intake));
-        bButton.whenReleased(new toggleFlippyDippy(intake, false));
-
+        bButton.whileActiveOnce(
+          new SequentialCommandGroup(
+            new EndIntake(intake),
+            new toggleFlippyDippy(intake, false)
+          ));
 
         new JoystickButton(driverController, 9) //left joystick button
         .whenPressed(new InstantCommand(dShifter::setSpeed, dShifter));

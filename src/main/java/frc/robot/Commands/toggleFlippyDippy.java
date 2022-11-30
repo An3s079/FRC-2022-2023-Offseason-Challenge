@@ -17,7 +17,7 @@ public class toggleFlippyDippy extends CommandBase{
 // Called when the command is initially scheduled.
 @Override
 public void initialize() {
-  initPos = intake.flippyDippyMotor.getEncoder().getPosition();
+  intake.flippyDippyMotor.getEncoder().setPosition(0);
 }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -40,9 +40,8 @@ public void initialize() {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    
     return 
-    ((Math.abs(intake.flippyDippyMotor.getEncoder().getPosition()-initPos) / intake.flippyDippyMotor.getEncoder().getCountsPerRevolution()) >= constants.dropperRotationsToTravel) || IwantItOut == intake.intakeOut;
+     (intake.flippyDippyMotor.getEncoder().getPosition() <= intake.topLimitEncoderFlippy)  || (intake.flippyDippyMotor.getEncoder().getPosition() >= intake.botLimitEncoderFlippy)|| IwantItOut == intake.intakeOut;
   }
     
 }

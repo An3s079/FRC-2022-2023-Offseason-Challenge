@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants;
 import frc.robot.constants.IDs;
 
 import com.revrobotics.CANSparkMax;
@@ -15,7 +16,8 @@ public class Intake extends SubsystemBase{
     public CANSparkMax grabberSidekick = new CANSparkMax(IDs.Intake.spinnerMainMotor, MotorType.kBrushless);
 
     public CANSparkMax flippyDippyMotor = new CANSparkMax(IDs.Intake.flippyDippyMotor, MotorType.kBrushless);
-
+    public double topLimitEncoderFlippy;
+    public double botLimitEncoderFlippy;
     private DoubleSolenoid clamper = 
       new DoubleSolenoid(IDs.PneumaticsHub, PneumaticsModuleType.REVPH, IDs.Intake.clamperOpenChannel, IDs.Intake.clamperCloseChannel);
 
@@ -24,6 +26,9 @@ public class Intake extends SubsystemBase{
     
     public Intake(){
         grabberSidekick.follow(grabberMain);
+        flippyDippyMotor.getEncoder().setPosition(0);
+        topLimitEncoderFlippy = 0;
+        botLimitEncoderFlippy = constants.dropperRotationsToTravel/flippyDippyMotor.getEncoder().getCountsPerRevolution();
     }
 
     public void runMotors(double speed){
